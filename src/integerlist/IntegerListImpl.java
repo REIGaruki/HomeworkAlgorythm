@@ -89,8 +89,35 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public boolean contains(Integer item) {
-        int index = indexOf(item);
-        return (index >= 0);
+        long start = System.currentTimeMillis();
+//        Integer[] sortedList1 = toArray();
+//        sortListBubble(sortedList1);
+//        System.out.println(System.currentTimeMillis() - start);
+//        start = System.currentTimeMillis();
+//        Integer[] sortedList2 = toArray();
+//        sortListSelection(sortedList2);
+//        System.out.println(System.currentTimeMillis() - start);
+//        start = System.currentTimeMillis();
+        Integer[] sortedList3 = toArray();
+        sortListInsertion(sortedList3);
+        System.out.println(System.currentTimeMillis() - start);
+        int min = 0;
+        int max = sortedList3.length - 1;
+
+        while (min <= max) {
+            int mid = (min + max) / 2;
+
+            if (item == sortedList3[mid]) {
+                return true;
+            }
+
+            if (item < sortedList3[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -161,6 +188,46 @@ public class IntegerListImpl implements IntegerList {
     public Integer[] toArray() {
         return Arrays.copyOf(integerList, this.size());
     }
+    private Integer[] sortListBubble(Integer[] integerList) {
+        for (int i = 0; i < integerList.length - 1; i++) {
+            for (int j = 0; j < integerList.length - 1 - i; j++) {
+                if (integerList[j] > integerList[j + 1]) {
+                    swapElements(integerList, j, j + 1);
+                }
+            }
+        }
+        return integerList;
+    }
+    private Integer[] sortListSelection(Integer[] integerList) {
+        for (int i = 0; i < integerList.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < integerList.length; j++) {
+                if (integerList[j] < integerList[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(integerList, i, minElementIndex);
+        }
+        return integerList;
+    }
+    private Integer[] sortListInsertion(Integer[] integerList) {
+        for (int i = 0; i < integerList.length - 1; i++) {
+            int minElementIndex = i;
+            for (int j = i + 1; j < integerList.length; j++) {
+                if (integerList[j] < integerList[minElementIndex]) {
+                    minElementIndex = j;
+                }
+            }
+            swapElements(integerList, i, minElementIndex);
+        }
+        return integerList;
+    }
+
+private static void swapElements(Integer[] arr, int indexA, int indexB) {
+    int tmp = arr[indexA];
+    arr[indexA] = arr[indexB];
+    arr[indexB] = tmp;
+}
 
     @Override
     public String toString() {
