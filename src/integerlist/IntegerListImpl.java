@@ -9,19 +9,45 @@ import java.util.Arrays;
 public class IntegerListImpl implements IntegerList {
     private Integer[] integerList;
     public IntegerListImpl() {
-        this.integerList = new Integer[0];
+        this.integerList = new Integer[5];
     }
 
     @Override
     public Integer add(Integer item) {
-        int newSize = integerList.length + 1;
-        Integer[] Integers = new Integer[newSize];
-        for (int i = 0; i< integerList.length; i++) {
-            Integers[i] = integerList[i];
+        for (int i = 0; i < integerList.length; i++) {
+            if (integerList[i] == null) {
+                integerList[i] = item;
+                return item;
+            }
         }
-        Integers[newSize - 1] = item;
-        integerList = Integers;
+        int index = integerList.length;
+        grow();
+        integerList[index] = item;
         return item;
+    }
+    public static void quickSort(Integer[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private static int partition(Integer[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
     }
 
     @Override
@@ -29,16 +55,15 @@ public class IntegerListImpl implements IntegerList {
         if (index < 0 || index >= integerList.length) {
             throw new IncorrectIndexException("index out of bounds");
         }
-        int newSize = integerList.length + 1;
-        Integer[] Integers = new Integer[newSize];
-        for (int i=0; i< index; i++) {
-            Integers[i] = integerList[i];
+        if (integerList[index] == null) {
+            integerList[index] = item;
+            return item;
         }
-        Integers[index] = item;
-        for (int i=index+1; i< newSize; i++) {
-            Integers[i] = integerList[i - 1];
+        grow();
+        for (int i=size() - 1; i>index ; i--) {
+            integerList[i] = integerList[i - 1];
         }
-        integerList = Integers;
+        integerList[index] = item;
         return item;
     }
 
@@ -99,7 +124,7 @@ public class IntegerListImpl implements IntegerList {
 //        System.out.println(System.currentTimeMillis() - start);
 //        start = System.currentTimeMillis();
         Integer[] sortedList3 = toArray();
-        sortListInsertion(sortedList3);
+        quickSort(sortedList3, sortedList3[0], sortedList3[sortedList3.length - 1]);
         System.out.println(System.currentTimeMillis() - start);
         int min = 0;
         int max = sortedList3.length - 1;
@@ -223,11 +248,11 @@ public class IntegerListImpl implements IntegerList {
         return integerList;
     }
 
-private static void swapElements(Integer[] arr, int indexA, int indexB) {
-    int tmp = arr[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = tmp;
-}
+    private static void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
 
     @Override
     public String toString() {
@@ -237,5 +262,8 @@ private static void swapElements(Integer[] arr, int indexA, int indexB) {
     @Override
     public int hashCode() {
         return Arrays.hashCode(integerList);
+    }
+    private void grow() {
+        integerList = Arrays.copyOf(integerList, integerList.length + integerList.length / 2);
     }
 }
