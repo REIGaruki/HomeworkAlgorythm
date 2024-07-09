@@ -14,7 +14,7 @@ class IntegerListImplTest {
     @BeforeEach
     void init() {
         array = new IntegerListImpl();
-        for (int i=0; i<9; i++) {
+        for (int i=0; i<5; i++) {
             array.add(i);
         }
     }
@@ -25,7 +25,7 @@ class IntegerListImplTest {
         Integer expectedInteger = (9);
         Integer actualInteger = array.add(9);
         Assertions.assertEquals(expectedInteger,actualInteger);
-        Assertions.assertEquals(10,array.size());
+        Assertions.assertEquals(7,array.size());
     }
     @Test
     @DisplayName("Тест проверяет правильность добавления элемента по индексу")
@@ -33,7 +33,7 @@ class IntegerListImplTest {
         Integer expectedInteger = (9);
         Integer actualInteger = array.add(2,9);
         Assertions.assertEquals(expectedInteger,actualInteger);
-        Assertions.assertEquals(10,array.size());
+        Assertions.assertEquals(7,array.size());
     }
 
     @Test
@@ -61,10 +61,10 @@ class IntegerListImplTest {
     @Test
     @DisplayName("Тест проверяет корректность удаления элемента")
     void remove() {
-        Integer expected = (8);
-        Integer actual = array.remove(8);
+        Integer expected = 4;
+        Integer actual = array.remove(4);
         Assertions.assertEquals(expected,actual);
-        Assertions.assertEquals(8,array.size());
+        Assertions.assertEquals(4,array.size());
     }
 
     @Test
@@ -75,13 +75,13 @@ class IntegerListImplTest {
 
     @Test
     void contains() {
-        Assertions.assertTrue(array.contains(8));
+        Assertions.assertTrue(array.contains(4));
     }
 
     @Test
     void indexOf() {
-        int expected = 8;
-        int actual = array.indexOf(8);
+        int expected = 4;
+        int actual = array.indexOf(4);
         Assertions.assertEquals(expected, actual);
     }
     @Test
@@ -94,7 +94,7 @@ class IntegerListImplTest {
     @Test
     void lastIndexOf() {
         int expected = 0;
-        int actual = array.lastIndexOf(8);
+        int actual = array.lastIndexOf(4);
         Assertions.assertEquals(expected, actual);
     }
     @Test
@@ -115,7 +115,7 @@ class IntegerListImplTest {
     void testEquals() {
         IntegerListImpl expected = array;
         IntegerListImpl actual = new IntegerListImpl();
-        for (int i=0; i<9; i++) {
+        for (int i=0; i<5; i++) {
             actual.add(i);
         }
         Assertions.assertTrue(expected.equals(actual));
@@ -129,7 +129,7 @@ class IntegerListImplTest {
 
     @Test
     void size() {
-        int expected = 9;
+        int expected = 5;
         int actual = array.size();
         Assertions.assertEquals(expected, actual);
     }
