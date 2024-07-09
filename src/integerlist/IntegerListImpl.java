@@ -7,100 +7,112 @@ import exception.IntegerNotFoundException;
 import java.util.Arrays;
 
 public class IntegerListImpl implements IntegerList {
-    private Integer[] IntegerList;
+    private Integer[] integerList;
     public IntegerListImpl() {
-        this.IntegerList = new Integer[0];
+        this.integerList = new Integer[0];
     }
 
     @Override
     public Integer add(Integer item) {
-        int newSize = IntegerList.length + 1;
+        int newSize = integerList.length + 1;
         Integer[] Integers = new Integer[newSize];
-        for (int i=0; i< IntegerList.length; i++) {
-            Integers[i] = IntegerList[i];
+        for (int i = 0; i< integerList.length; i++) {
+            Integers[i] = integerList[i];
         }
         Integers[newSize - 1] = item;
-        IntegerList = Integers;
+        integerList = Integers;
         return item;
     }
 
     @Override
     public Integer add(int index, Integer item) {
-        if (index < 0 || index >= IntegerList.length) {
+        if (index < 0 || index >= integerList.length) {
             throw new IncorrectIndexException("index out of bounds");
         }
-        int newSize = IntegerList.length + 1;
+        int newSize = integerList.length + 1;
         Integer[] Integers = new Integer[newSize];
         for (int i=0; i< index; i++) {
-            Integers[i] = IntegerList[i];
+            Integers[i] = integerList[i];
         }
         Integers[index] = item;
         for (int i=index+1; i< newSize; i++) {
-            Integers[i] = IntegerList[i - 1];
+            Integers[i] = integerList[i - 1];
         }
-        IntegerList = Integers;
+        integerList = Integers;
         return item;
     }
 
     @Override
     public Integer set(int index, Integer item) {
-        if (index < 0 || index >= IntegerList.length) {
+        if (index < 0 || index >= integerList.length) {
             throw new IncorrectIndexException("index out of bounds");
         }
-        IntegerList[index] = item;
+        integerList[index] = item;
         return item;
     }
 
     @Override
     public Integer remove(Integer item) {
-        int newSize = IntegerList.length - 1;
+        int newSize = integerList.length - 1;
         Integer[] Integers = new Integer[newSize];
         int index = this.indexOf(item);
         if (index == -1) {
             throw new IntegerNotFoundException("Element is not found");
         }
         for (int i=0; i< index; i++) {
-            Integers[i] = IntegerList[i];
+            Integers[i] = integerList[i];
         }
-        for (int i=index + 1; i< IntegerList.length; i++) {
-            Integers[i - 1] = IntegerList[i];
+        for (int i = index + 1; i< integerList.length; i++) {
+            Integers[i - 1] = integerList[i];
         }
-        IntegerList = Integers;
+        integerList = Integers;
         return item;
     }
 
     @Override
     public Integer remove(int index) {
-        if (index < 0 || index >= IntegerList.length) {
+        if (index < 0 || index >= integerList.length) {
             throw new IncorrectIndexException("index out of bounds");
         }
-        Integer item = IntegerList[index];
-        int newSize = IntegerList.length - 1;
+        Integer item = integerList[index];
+        int newSize = integerList.length - 1;
         Integer[] Integers = new Integer[newSize];
         for (int i=0; i< index; i++) {
-            Integers[i] = IntegerList[i];
+            Integers[i] = integerList[i];
         }
-        for (int i=index + 1; i< IntegerList.length; i++) {
-            Integers[i - 1] = IntegerList[i];
+        for (int i = index + 1; i< integerList.length; i++) {
+            Integers[i - 1] = integerList[i];
         }
-        IntegerList = Integers;
+        integerList = Integers;
         return item;
     }
 
     @Override
     public boolean contains(Integer item) {
-        for (int i=0; i< IntegerList.length; i++) {
-            if (IntegerList[i].equals(item)) {
-                return true;
-            }
-        }
-        return false;
+        int index = indexOf(item);
+        return (index >= 0);
     }
 
     @Override
     public int indexOf(Integer item) {
-        for (int i=0; i< IntegerList.length; i++) {
-            if (IntegerList[i].equals(item)) {
+        return getIndex(item);
+    }
+
+    @Override
+    public int lastIndexOf(Integer item) {
+        int index = getIndex(item);
+        if (index>=0) {
+            index = integerList.length - 1 - index;
+        }
+        return index;
+    }
+    private int getIndex(Integer item) {
+        for (int i = 0; i<= integerList.length/2; i++) {
+            int j = integerList.length - 1 - i;
+            if (integerList[j].equals(item)) {
+                return j;
+            }
+            if (integerList[i].equals(item)) {
                 return i;
             }
         }
@@ -108,18 +120,8 @@ public class IntegerListImpl implements IntegerList {
     }
 
     @Override
-    public int lastIndexOf(Integer item) {
-        for (int i=IntegerList.length - 1; i>=0 ; i--) {
-            if (IntegerList[i].equals(item)) {
-                return IntegerList.length - 1 - i;
-            }
-        }
-        return -1;
-    }
-
-    @Override
     public Integer get(int index) {
-        return IntegerList[index];
+        return integerList[index];
     }
 
     @Override
@@ -142,31 +144,31 @@ public class IntegerListImpl implements IntegerList {
 
     @Override
     public int size() {
-        return IntegerList.length;
+        return integerList.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return (IntegerList.length == 0);
+        return (integerList.length == 0);
     }
 
     @Override
     public void clear() {
-        IntegerList = new Integer[0];
+        integerList = new Integer[0];
     }
 
     @Override
     public Integer[] toArray() {
-        return Arrays.copyOf(IntegerList, this.size());
+        return Arrays.copyOf(integerList, this.size());
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(IntegerList);
+        return Arrays.toString(integerList);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(IntegerList);
+        return Arrays.hashCode(integerList);
     }
 }
