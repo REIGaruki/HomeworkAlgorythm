@@ -1,4 +1,4 @@
-package exception.integerlist;
+package integerlist;
 
 public interface IntegerList {
     // Добавление элемента.

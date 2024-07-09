@@ -1,4 +1,4 @@
-package exception.integerlist;
+package integerlist;
 
 import exception.IncorrectIndexException;
 import exception.NoArrayException;
