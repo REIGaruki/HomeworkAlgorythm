@@ -1,3 +1,5 @@
+package stringlist;
+
 import exception.IncorrectIndexException;
 import exception.NoArrayException;
 import exception.StringNotFoundException;
@@ -134,7 +136,7 @@ public class StringListImpl implements StringList{
             }
         }
         return true;
-//        StringListImpl that = (StringListImpl) otherList;
+//        stringlist.StringListImpl that = (stringlist.StringListImpl) otherList;
 //        return Arrays.equals(stringList, that.stringList);
     }
 
@@ -155,11 +157,7 @@ public class StringListImpl implements StringList{
 
     @Override
     public String[] toArray() {
-        String[] strings = new String[stringList.length];
-        for (int i=0; i< stringList.length; i++) {
-            strings[i] = stringList[i];
-        }
-        return strings;
+        return Arrays.copyOf(stringList, this.size());
     }
 
     @Override

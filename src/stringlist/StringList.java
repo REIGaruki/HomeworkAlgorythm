@@ -1,3 +1,5 @@
+package stringlist;
+
 public interface StringList {
     // Добавление элемента.
     // Вернуть добавленный элемент
