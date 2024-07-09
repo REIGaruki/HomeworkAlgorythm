@@ -1,3 +1,7 @@
+import exception.IncorrectIndexException;
+import exception.NoArrayException;
+import exception.StringNotFoundException;
+
 import java.util.Arrays;
 
 public class StringListImpl implements StringList{
@@ -20,6 +24,9 @@ public class StringListImpl implements StringList{
 
     @Override
     public String add(int index, String item) {
+        if (index < 0 || index >= stringList.length) {
+            throw new IncorrectIndexException("index out of bounds");
+        }
         int newSize = stringList.length + 1;
         String[] strings = new String[newSize];
         for (int i=0; i< index; i++) {
@@ -35,6 +42,9 @@ public class StringListImpl implements StringList{
 
     @Override
     public String set(int index, String item) {
+        if (index < 0 || index >= stringList.length) {
+            throw new IncorrectIndexException("index out of bounds");
+        }
         stringList[index] = item;
         return item;
     }
@@ -44,6 +54,9 @@ public class StringListImpl implements StringList{
         int newSize = stringList.length - 1;
         String[] strings = new String[newSize];
         int index = this.indexOf(item);
+        if (index == -1) {
+            throw new StringNotFoundException("Element is not found");
+        }
         for (int i=0; i< index; i++) {
             strings[i] = stringList[i];
         }
@@ -56,6 +69,9 @@ public class StringListImpl implements StringList{
 
     @Override
     public String remove(int index) {
+        if (index < 0 || index >= stringList.length) {
+            throw new IncorrectIndexException("index out of bounds");
+        }
         String item = stringList[index];
         int newSize = stringList.length - 1;
         String[] strings = new String[newSize];
@@ -106,8 +122,20 @@ public class StringListImpl implements StringList{
 
     @Override
     public boolean equals(StringList otherList) {
-        StringListImpl that = (StringListImpl) otherList;
-        return Arrays.equals(stringList, that.stringList);
+        if (otherList == null) {
+            throw new NoArrayException("String list is null");
+        }
+        if (this.size() != otherList.size()) {
+            return false;
+        }
+        for (int i=0; i<this.size(); i++) {
+            if (!this.get(i).equals(otherList.get(i))) {
+                return false;
+            }
+        }
+        return true;
+//        StringListImpl that = (StringListImpl) otherList;
+//        return Arrays.equals(stringList, that.stringList);
     }
 
     @Override
