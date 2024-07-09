@@ -223,12 +223,20 @@ public class IntegerListImpl implements IntegerList {
         return integerList;
     }
 
-private static void swapElements(Integer[] arr, int indexA, int indexB) {
-    int tmp = arr[indexA];
-    arr[indexA] = arr[indexB];
-    arr[indexB] = tmp;
-}
+    private static void swapElements(Integer[] arr, int indexA, int indexB) {
+        int tmp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = tmp;
+    }
 
+    private static void grow(Integer [] integerList) {
+        int growSize = integerList.length / 2 * 3;
+        Integer[] growList = new Integer[growSize];
+        for (int i = 0; i < integerList.length; i++) {
+            growList[i] = integerList[i];
+        }
+        integerList = growList;
+    }
     @Override
     public String toString() {
         return Arrays.toString(integerList);
